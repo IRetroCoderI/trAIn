@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>trAIn — Senior Design Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Palette: Emperor · Swirl · Edward · Santas Gray */
+    --emperor: #564e4d;
+    --swirl: #cfc7bf;
+    --edward: #aeb2b2;
+    --santas: #959eae;
+
+    --bg-primary: #100e0d;
+    --bg-secondary: #181514;
+    --bg-card: #1e1b19;
+    --accent: #959eae;
+    --accent-dim: #959eae20;
+    --accent-glow: #959eae35;
+    --text-primary: #cfc7bf;
+    --text-secondary: #aeb2b2;
+    --text-muted: #564e4d;
+    --border: #2a2523;
+    --tag-1: #959eae;
+    --tag-2: #cfc7bf;
+    --tag-3: #aeb2b2;
+    --tag-4: #7a7068;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 3rem;
+    background: rgba(16,14,13,0.88);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s;
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--text-primary); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 6rem 2rem 4rem;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -30%; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.4; transform: translateX(-50%) scale(1); }
+    50% { opacity: 0.7; transform: translateX(-50%) scale(1.1); }
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--accent-dim);
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-badge .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    animation: blink 2s infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 14vw, 12rem);
+    letter-spacing: 8px;
+    line-height: 0.9;
+    position: relative;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+  .hero h1 .ai {
+    color: var(--accent);
+    position: relative;
+  }
+  .hero h1 .ai::after {
+    content: '';
+    position: absolute;
+    bottom: 8px; left: 0; right: 0;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+  .hero-sub {
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 1.5rem auto 2.5rem;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp 0.8s ease 0.35s both;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.85rem 2rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s;
+    border: none;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg-primary);
+  }
+  .btn-primary:hover { box-shadow: 0 0 30px var(--accent-glow); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 4rem;
+    animation: fadeUp 0.8s ease 0.5s both;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--accent);
+    letter-spacing: 2px;
+  }
+  .hero-stat .label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    padding: 6rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 3px;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+  .section-desc {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    max-width: 680px;
+    margin-bottom: 3rem;
+  }
+
+  /* ─── PROBLEM ─── */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .problem-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .problem-card:hover {
+    border-color: var(--accent-dim);
+    transform: translateY(-4px);
+  }
+  .problem-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .problem-card:hover::before { opacity: 1; }
+  .problem-icon {
+    width: 48px; height: 48px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .problem-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .problem-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ─── FEATURES ─── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+  .feature-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2.25rem;
+    display: flex; flex-direction: column;
+    transition: all 0.3s;
+  }
+  .feature-card:hover { border-color: var(--accent-dim); transform: translateY(-3px); }
+  .feature-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--accent);
+    opacity: 0.25;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .feature-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .feature-card p { font-size: 0.9rem; color: var(--text-secondary); flex: 1; }
+  .feature-tag {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .tag-cv { background: #959eae18; color: var(--tag-1); }
+  .tag-ai { background: #cfc7bf18; color: var(--tag-2); }
+  .tag-ux { background: #aeb2b218; color: var(--tag-3); }
+  .tag-data { background: #7a706818; color: var(--tag-4); }
+
+  /* ─── PIPELINE ─── */
+  .pipeline-section {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 6rem 2rem;
+  }
+  .pipeline-inner { max-width: 1200px; margin: 0 auto; }
+  .pipeline-flow {
+    display: flex;
+    gap: 0;
+    margin-top: 2rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+  }
+  .pipeline-step {
+    flex: 1;
+    min-width: 180px;
+    padding: 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    position: relative;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .pipeline-step:first-child { border-radius: 12px 0 0 12px; }
+  .pipeline-step:last-child { border-radius: 0 12px 12px 0; }
+  .pipeline-step:hover { background: #252120; }
+  .pipeline-step::after {
+    content: '→';
+    position: absolute;
+    right: -12px; top: 50%; transform: translateY(-50%);
+    color: var(--accent);
+    font-size: 1.2rem;
+    z-index: 2;
+    font-weight: bold;
+  }
+  .pipeline-step:last-child::after { display: none; }
+  .pipe-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+  .pipe-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.3rem;
+  }
+  .pipe-title { font-weight: 700; font-size: 0.95rem; }
+  .pipe-desc { font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.35rem; }
+
+  /* ─── SCREENS ─── */
+  .screens-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  .screen-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .screen-item:hover { border-color: var(--accent-dim); transform: translateY(-3px); }
+  .screen-preview {
+    height: 180px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .screen-preview::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, var(--bg-card));
+  }
+  .screen-info { padding: 1.25rem; }
+  .screen-info h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .screen-info p { font-size: 0.8rem; color: var(--text-secondary); }
+
+  /* ─── TECH STACK ─── */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .stack-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .stack-card:hover { border-color: var(--accent-dim); }
+  .stack-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+  .stack-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.2rem; }
+  .stack-desc { font-size: 0.78rem; color: var(--text-secondary); }
+
+  /* ─── DOCTOR DOPAMINE ─── */
+  .coach-section {
+    background: linear-gradient(135deg, #14110f 0%, var(--bg-primary) 100%);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 6rem 2rem;
+  }
+  .coach-inner { max-width: 1200px; margin: 0 auto; }
+  .coach-card {
+    background: var(--bg-card);
+    border: 1px solid var(--accent-dim);
+    border-radius: 18px;
+    padding: 3rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2.5rem;
+    align-items: center;
+  }
+  .coach-avatar {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-dim), var(--bg-primary));
+    border: 2px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .coach-avatar::after {
+    content: '';
+    position: absolute; inset: -8px;
+    border: 1px solid var(--accent-dim);
+    border-radius: 50%;
+    animation: rotate 8s linear infinite;
+  }
+  @keyframes rotate {
+    from { transform: rotate(0); }
+    to { transform: rotate(360deg); }
+  }
+  .coach-content h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+  }
+  .coach-content h3 span { color: var(--accent); }
+  .coach-content .coach-role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+  }
+  .coach-content p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem; }
+  .coach-quote {
+    background: var(--bg-primary);
+    border-left: 3px solid var(--accent);
+    padding: 1rem 1.25rem;
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+
+  /* ─── TEAM ─── */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+  }
+  .team-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .team-card:hover { border-color: var(--accent-dim); transform: translateY(-3px); }
+  .team-avatar-placeholder {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-dim), var(--bg-primary));
+    border: 2px solid var(--border);
+    margin: 0 auto 1rem;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--accent);
+    letter-spacing: 1px;
+  }
+  .team-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; }
+  .team-card .role {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.75rem;
+  }
+  .team-card .contribs {
+    text-align: left;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    border-top: 1px solid var(--border);
+    padding-top: 0.75rem;
+    margin-top: 0.25rem;
+  }
+  .team-card .contribs li {
+    list-style: none;
+    padding-left: 1rem;
+    position: relative;
+    margin-bottom: 0.35rem;
+  }
+  .team-card .contribs li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* ─── CSUN SECTION ─── */
+  .csun-bar {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+  }
+  .csun-bar p {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .csun-bar .school {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: var(--text-secondary);
+    letter-spacing: 4px;
+    margin-top: 0.5rem;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    border-top: 1px solid var(--border);
+  }
+  footer p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  footer .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+  }
+  footer .footer-logo span { color: var(--accent); }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.25rem; }
+    .hero-stats { gap: 1.5rem; }
+    .coach-card { grid-template-columns: 1fr; text-align: center; }
+    .coach-avatar { margin: 0 auto; width: 100px; height: 100px; font-size: 3rem; }
+    .pipeline-flow { flex-direction: column; }
+    .pipeline-step { border-radius: 0 !important; }
+    .pipeline-step::after { content: '↓'; right: auto; bottom: -14px; top: auto; left: 50%; transform: translateX(-50%); }
+    .pipeline-step:last-child::after { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">tr<span>AI</span>n</a>
+  <ul class="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pipeline">How It Works</a></li>
+    <li><a href="#screens">App</a></li>
+    <li><a href="#tech">Tech Stack</a></li>
+    <li><a href="#team">Team</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span> CSUN Senior Design — Spring 2026</div>
+  <h1>tr<span class="ai">AI</span>n</h1>
+  <p class="hero-sub">An AI-powered mobile fitness coach that watches your form, counts your reps, and guides your fitness journey — all from your phone's camera.</p>
+  <div class="hero-actions">
+    <a href="#features" class="btn btn-primary">Explore Features ↓</a>
+    <a href="#pipeline" class="btn btn-outline">How It Works</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="num">5+</div><div class="label">Exercises</div></div>
+    <div class="hero-stat"><div class="num">30fps</div><div class="label">Real-Time</div></div>
+    <div class="hero-stat"><div class="num">ON-DEVICE</div><div class="label">AI Inference</div></div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="reveal">
+    <div class="section-label">// the problem</div>
+    <h2 class="section-title">Beginners Deserve Better</h2>
+    <p class="section-desc">Most new gym-goers face the same barriers: no guidance, no feedback, and no confidence. trAIn was built to change that.</p>
+  </div>
+  <div class="problem-grid">
+    <div class="problem-card reveal">
+      <div class="problem-icon" style="background: #564e4d20;">🤷</div>
+      <h3>No Starting Point</h3>
+      <p>Beginners don't know which exercises to do, how to structure workouts, or where to even begin their fitness journey.</p>
+    </div>
+    <div class="problem-card reveal">
+      <div class="problem-icon" style="background: #959eae18;">👁️</div>
+      <h3>No Form Feedback</h3>
+      <p>Exercising alone means nobody corrects your form. Bad habits build up silently, increasing injury risk and reducing effectiveness.</p>
+    </div>
+    <div class="problem-card reveal">
+      <div class="problem-icon" style="background: #aeb2b218;">📉</div>
+      <h3>No Visible Progress</h3>
+      <p>Without tracking or summaries, users can't see whether they're improving — making it easy to lose motivation and quit.</p>
+    </div>
+    <div class="problem-card reveal">
+      <div class="problem-icon" style="background: #cfc7bf18;">💸</div>
+      <h3>Trainer Cost Barrier</h3>
+      <p>Personal trainers are expensive. trAIn brings guided coaching to anyone with a smartphone — at zero cost.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="reveal">
+    <div class="section-label">// core features</div>
+    <h2 class="section-title">What trAIn Does</h2>
+    <p class="section-desc">A complete training pipeline: from onboarding to real-time coaching to post-workout analysis.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-num">01</div>
+      <h3>Smart Onboarding Survey</h3>
+      <p>A short, beginner-friendly questionnaire captures age, weight, goals, and motivations to personalize every session.</p>
+      <span class="feature-tag tag-ux">User Experience</span>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">02</div>
+      <h3>Guided Workout Selection</h3>
+      <p>Curated bodyweight routines — push-ups, squats, lunges, crunches — tailored for beginners with clear instructions.</p>
+      <span class="feature-tag tag-ux">User Experience</span>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">03</div>
+      <h3>Real-Time Pose Estimation</h3>
+      <p>On-device computer vision tracks body landmarks at 30fps, enabling live rep counting and movement phase detection.</p>
+      <span class="feature-tag tag-cv">Computer Vision</span>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">04</div>
+      <h3>Live Form Correction</h3>
+      <p>Instant feedback on depth, alignment, posture, and range of motion. Corrective cues appear in real-time as you move.</p>
+      <span class="feature-tag tag-cv">Computer Vision</span>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">05</div>
+      <h3>Post-Workout Reports</h3>
+      <p>Session summaries with rep totals, quality scores, fatigue estimates, and comparison data over time.</p>
+      <span class="feature-tag tag-data">Data & Analytics</span>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">06</div>
+      <h3>Doctor Dopamine AI Coach</h3>
+      <p>A motivational AI persona delivers personalized recommendations, reflections, and encouragement tied to your goals.</p>
+      <span class="feature-tag tag-ai">AI Coach</span>
+    </div>
+  </div>
+</section>
+
+<!-- PIPELINE -->
+<div class="pipeline-section" id="pipeline">
+  <div class="pipeline-inner">
+    <div class="reveal">
+      <div class="section-label">// real-time pipeline</div>
+      <h2 class="section-title">How The Vision System Works</h2>
+      <p class="section-desc">From camera frame to coaching feedback in milliseconds — all running on-device for speed and privacy.</p>
+    </div>
+    <div class="pipeline-flow reveal">
+      <div class="pipeline-step">
+        <div class="pipe-icon">📷</div>
+        <div class="pipe-label">Step 1</div>
+        <div class="pipe-title">Camera Feed</div>
+        <div class="pipe-desc">CameraX streams live frames to the inference engine</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipe-icon">🧠</div>
+        <div class="pipe-label">Step 2</div>
+        <div class="pipe-title">Pose Model</div>
+        <div class="pipe-desc">MediaPipe extracts 33 body landmarks per frame</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipe-icon">📐</div>
+        <div class="pipe-label">Step 3</div>
+        <div class="pipe-title">Exercise Logic</div>
+        <div class="pipe-desc">Joint angles are analyzed against exercise-specific rules</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipe-icon">🔄</div>
+        <div class="pipe-label">Step 4</div>
+        <div class="pipe-title">Rep Detection</div>
+        <div class="pipe-desc">Phase changes trigger accurate rep counting</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipe-icon">💬</div>
+        <div class="pipe-label">Step 5</div>
+        <div class="pipe-title">Live Feedback</div>
+        <div class="pipe-desc">Form corrections appear on-screen in real time</div>
+      </div>
+      <div class="pipeline-step">
+        <div class="pipe-icon">📊</div>
+        <div class="pipe-label">Step 6</div>
+        <div class="pipe-title">Summary</div>
+        <div class="pipe-desc">Aggregated metrics generate the post-workout report</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APP SCREENS -->
+<section id="screens">
+  <div class="reveal">
+    <div class="section-label">// app experience</div>
+    <h2 class="section-title">Inside the App</h2>
+    <p class="section-desc">Every screen is designed to be readable at arm's length while exercising — minimal friction, maximum clarity.</p>
+  </div>
+  <div class="screens-showcase">
+    <div class="screen-item reveal">
+      <div class="screen-preview" style="background: linear-gradient(135deg, #1a1614, #151218);">👋</div>
+      <div class="screen-info">
+        <h4>Welcome & Onboarding</h4>
+        <p>Sets the tone with Doctor Dopamine and guides users into profile setup.</p>
+      </div>
+    </div>
+    <div class="screen-item reveal">
+      <div class="screen-preview" style="background: linear-gradient(135deg, #1a1518, #141218);">📋</div>
+      <div class="screen-info">
+        <h4>Profile & Survey</h4>
+        <p>Short form collecting age, weight, goals, and motivation preferences.</p>
+      </div>
+    </div>
+    <div class="screen-item reveal">
+      <div class="screen-preview" style="background: linear-gradient(135deg, #14171a, #181614);">🏋️</div>
+      <div class="screen-info">
+        <h4>Workout Selection</h4>
+        <p>Browse beginner routines with clear descriptions and expected difficulty.</p>
+      </div>
+    </div>
+    <div class="screen-item reveal">
+      <div class="screen-preview" style="background: linear-gradient(135deg, #959eae10, #14171a);">📸</div>
+      <div class="screen-info">
+        <h4>Active Session</h4>
+        <p>Camera view with live rep count, form feedback, and exercise progress.</p>
+      </div>
+    </div>
+    <div class="screen-item reveal">
+      <div class="screen-preview" style="background: linear-gradient(135deg, #1e1814, #181a14);">📊</div>
+      <div class="screen-info">
+        <h4>Post-Workout Report</h4>
+        <p>Performance summary with quality scores, rep data, and AI coaching.</p>
+      </div>
+    </div>
+    <div class="screen-item reveal">
+      <div class="screen-preview" style="background: linear-gradient(135deg, #141a1a, #141418);">📈</div>
+      <div class="screen-info">
+        <h4>History & Progress</h4>
+        <p>View past sessions, track trends, and identify areas for improvement.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section id="tech">
+  <div class="reveal">
+    <div class="section-label">// technology</div>
+    <h2 class="section-title">Built With</h2>
+    <p class="section-desc">A modern Android-native stack combining Jetpack Compose, on-device ML, and cloud services.</p>
+  </div>
+  <div class="stack-grid">
+    <div class="stack-card reveal">
+      <div class="stack-icon">🤖</div>
+      <div class="stack-name">Kotlin</div>
+      <div class="stack-desc">Native Android development language</div>
+    </div>
+    <div class="stack-card reveal">
+      <div class="stack-icon">🎨</div>
+      <div class="stack-name">Jetpack Compose</div>
+      <div class="stack-desc">Modern declarative UI framework</div>
+    </div>
+    <div class="stack-card reveal">
+      <div class="stack-icon">📷</div>
+      <div class="stack-name">CameraX</div>
+      <div class="stack-desc">Android camera pipeline for live frame streaming</div>
+    </div>
+    <div class="stack-card reveal">
+      <div class="stack-icon">🧠</div>
+      <div class="stack-name">MediaPipe / MoveNet</div>
+      <div class="stack-desc">On-device pose estimation &amp; landmark detection</div>
+    </div>
+    <div class="stack-card reveal">
+      <div class="stack-icon">🔥</div>
+      <div class="stack-name">Firebase</div>
+      <div class="stack-desc">Auth, Firestore, and user data storage</div>
+    </div>
+    <div class="stack-card reveal">
+      <div class="stack-icon">🛠️</div>
+      <div class="stack-name">Android Studio</div>
+      <div class="stack-desc">Primary IDE &amp; emulator environment</div>
+    </div>
+    <div class="stack-card reveal">
+      <div class="stack-icon">✏️</div>
+      <div class="stack-name">Figma</div>
+      <div class="stack-desc">UI/UX design and prototyping</div>
+    </div>
+    <div class="stack-card reveal">
+      <div class="stack-icon">🐙</div>
+      <div class="stack-name">GitHub</div>
+      <div class="stack-desc">Version control &amp; team collaboration</div>
+    </div>
+  </div>
+</section>
+
+<!-- DOCTOR DOPAMINE -->
+<div class="coach-section" id="coach">
+  <div class="coach-inner">
+    <div class="reveal">
+      <div class="section-label">// meet the coach</div>
+      <h2 class="section-title">Doctor Dopamine</h2>
+    </div>
+    <div class="coach-card reveal">
+      <div class="coach-avatar">🧬</div>
+      <div class="coach-content">
+        <div class="coach-role">AI Training Persona</div>
+        <h3>Your <span>Personal</span> Coach</h3>
+        <p>Doctor Dopamine is the AI personality behind every motivational message, post-workout reflection, and goal-aware recommendation in trAIn. More than a chatbot — it's a training companion that remembers your goals and celebrates your progress.</p>
+        <div class="coach-quote">
+          "Great work today — your squat depth improved 15% since last Tuesday. Your consistency this week is building real strength. Tomorrow, try adding one extra set of lunges. You've got this."
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="reveal">
+    <div class="section-label">// the team</div>
+    <h2 class="section-title">Who Built trAIn</h2>
+    <p class="section-desc">Five CSUN Computer Science seniors combining frontend, computer vision, backend, database, and AI expertise.</p>
+  </div>
+  <div class="team-grid">
+    <div class="team-card reveal">
+      <div class="team-avatar-placeholder">JR</div>
+      <h4>Jesus Ramirez</h4>
+      <div class="role">Backend · AI · Pose Logic</div>
+      <ul class="contribs">
+        <li>Dynamic user data display system with Firebase</li>
+        <li>Workout metrics integration into profile dashboard</li>
+        <li>AI Coach feedback module &amp; prompt engineering</li>
+        <li>Pose estimation threshold alignment for rep detection</li>
+        <li>Movement state &amp; edge-case handling for form eval</li>
+      </ul>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-avatar-placeholder">CE</div>
+      <h4>Christian Estrada</h4>
+      <div class="role">Backend · CV · AI Coach</div>
+      <ul class="contribs">
+        <li>User body overlay visualization</li>
+        <li>User data storage design with SQL</li>
+        <li>AI Coach implementation &amp; motivational response generation</li>
+      </ul>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-avatar-placeholder">BB</div>
+      <h4>Brian Bonilla</h4>
+      <div class="role">Camera · Pose Estimation</div>
+      <ul class="contribs">
+        <li>Camera API implementation</li>
+        <li>Live feed view for body outline &amp; pose tracking</li>
+        <li>Workout form correction visualization</li>
+      </ul>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-avatar-placeholder">RM</div>
+      <h4>Reenu Mohan</h4>
+      <div class="role">Frontend · UI/UX Design</div>
+      <ul class="contribs">
+        <li>Home screen design &amp; navigation</li>
+        <li>Workouts screen with organized workout lists</li>
+        <li>Workout Detail screen with instructions &amp; tutorials</li>
+        <li>Profile &amp; About screens</li>
+      </ul>
+    </div>
+    <div class="team-card reveal">
+      <div class="team-avatar-placeholder">VC</div>
+      <h4>Vishal Chaudhari</h4>
+      <div class="role">Backend · Database</div>
+      <ul class="contribs">
+        <li>User Signup/Login page</li>
+        <li>Firebase database architecture</li>
+        <li>User data storage: emails, passwords &amp; profile data</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- GITHUB -->
+<div class="csun-bar" style="border-bottom: 1px solid var(--border);">
+  <div class="section-label" style="margin-bottom: 0.75rem;">// source code</div>
+  <a href="https://github.com/tabee1024/trAIn" target="_blank" class="btn btn-outline" style="font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; letter-spacing: 1px;">github.com/tabee1024/trAIn →</a>
+</div>
+
+<!-- CSUN -->
+<div class="csun-bar">
+  <p>Senior Design Project — Spring 2026</p>
+  <div class="school">California State University, Northridge</div>
+  <p style="margin-top: 0.4rem;">Department of Computer Science</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">tr<span>AI</span>n</div>
+  <p>Built with purpose. Designed for beginners. Powered by AI.</p>
+</footer>
+
+<script>
+  // Scroll-based reveal animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
