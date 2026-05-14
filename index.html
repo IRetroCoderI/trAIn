@@ -1,11 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- ============================================================
+     trAIn — Senior Design Project Showcase Website
+     COMP 491 · Senior Design Project II · Spring 2026
+     California State University, Northridge
+     Department of Computer Science
+
+     REQUIREMENT #1: Project logo/name in the webpage title
+     FONTS: Bebas Neue (headings), DM Sans (body), JetBrains Mono (code/labels)
+     PALETTE: Emperor (#564e4d), Swirl (#cfc7bf), Edward (#aeb2b2), Santas Gray (#959eae)
+     ============================================================ -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>trAIn — AI Fitness Coach | CSUN Senior Design Project</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- ============================================================
+     CSS — All styles are inline in a single <style> block.
+     Organized by section: Nav, Hero, Sections, Intro, Problem,
+     Features, Pipeline, Screens, Video, Tech, Skills, Coach,
+     Team, Bars, Footer, Animations, Responsive.
+     ============================================================ -->
 <style>
   :root {
     --emperor: #564e4d; --swirl: #cfc7bf; --edward: #aeb2b2; --santas: #959eae;
@@ -203,10 +220,18 @@
 </head>
 <body>
 
+<!-- ============================================================
+     NAVIGATION BAR (fixed at top of page)
+     REQUIREMENT #9: CSUN logo + link to csun.edu on every page
+     Layout: [CSUN Logo | trAIn Logo .............. Nav Links]
+     The CSUN mark is a red square with "CSUN" text linking to csun.edu.
+     Nav links scroll to each section via anchor IDs.
+     Collapses to logo-only on mobile (nav-links hidden <768px).
+     ============================================================ -->
 <nav>
   <div class="nav-left">
-    <a href="https://www.csun.edu" target="_blank" class="csun-nav-logo" title="California State University, Northridge"><div class="csun-mark">CSUN</div></a>
-    <a href="#" class="nav-logo">tr<span>AI</span>n</a>
+    <a href="https://www.csun.edu" target="_blank" class="csun-nav-logo" title="California State University, Northridge"><img src="CSUNS.png" alt="CSUN" style="width:32px;height:32px;border-radius:4px"></a>
+    <a href="#" class="nav-logo"><img src="trAIn_1.png" alt="trAIn" style="width:30px;height:30px;border-radius:4px;margin-right:6px;vertical-align:middle">tr<span>AI</span>n</a>
   </div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
@@ -218,8 +243,15 @@
   </ul>
 </nav>
 
+<!-- ============================================================
+     HERO SECTION (full-viewport landing)
+     Contains: badge, large "trAIn" title, subtitle, CTA buttons,
+     and 3 stat counters. Animated glow background via ::before.
+     All elements use staggered fadeUp animations on page load.
+     ============================================================ -->
 <section class="hero">
   <div class="hero-badge"><span class="dot"></span> COMP 491 Senior Design — Spring 2026</div>
+  <img src="trAIn_1.png" alt="trAIn Logo" style="width:100px;height:100px;border-radius:16px;margin-bottom:1.5rem;animation:fadeUp .8s ease .05s both">
   <h1>tr<span class="ai">AI</span>n</h1>
   <p class="hero-sub">An AI-powered mobile fitness coach that watches your form, counts your reps, and guides your fitness journey — all from your phone's camera.</p>
   <div class="hero-actions">
@@ -233,6 +265,12 @@
   </div>
 </section>
 
+<!-- ============================================================
+     PROJECT INTRODUCTION (REQUIREMENT #3)
+     Describes the purpose of the project and its major features.
+     Two paragraphs of prose + 8-item checklist grid.
+     This content also serves the 60-120 word submission paragraph.
+     ============================================================ -->
 <div class="intro-section" id="about">
   <div class="intro-inner">
     <div class="reveal">
@@ -254,6 +292,12 @@
   </div>
 </div>
 
+<!-- ============================================================
+     PROBLEM SECTION
+     Four cards explaining the pain points trAIn solves:
+     no starting point, no form feedback, no visible progress,
+     trainer cost barrier. Cards have hover animations.
+     ============================================================ -->
 <section id="problem">
   <div class="reveal">
     <div class="section-label">// the problem</div>
@@ -268,6 +312,12 @@
   </div>
 </section>
 
+<!-- ============================================================
+     CORE FEATURES SECTION
+     Six feature cards with numbered labels (01-06), descriptions,
+     and color-coded tags: Computer Vision, AI Coach, UX, Data.
+     Grid is responsive: 2 columns on desktop, 1 on mobile.
+     ============================================================ -->
 <section id="features">
   <div class="reveal">
     <div class="section-label">// core features</div>
@@ -284,6 +334,13 @@
   </div>
 </section>
 
+<!-- ============================================================
+     PIPELINE SECTION — "How The Vision System Works"
+     Six-step horizontal flow: Camera Feed → Pose Model →
+     Exercise Logic → Rep Detection → Live Feedback → Summary.
+     Steps are connected with → arrows. On mobile, stacks
+     vertically with ↓ arrows between steps.
+     ============================================================ -->
 <div class="pipeline-section" id="pipeline">
   <div class="pipeline-inner">
     <div class="reveal">
@@ -302,6 +359,17 @@
   </div>
 </div>
 
+<!-- ============================================================
+     APP SCREENSHOTS (REQUIREMENT #6)
+     Six screen previews in a responsive grid. Currently using
+     emoji placeholders with gradient backgrounds.
+
+     TO ADD REAL SCREENSHOTS:
+     1. Place screenshot images in a "photos/" or "screenshots/" folder
+     2. Inside each .screen-preview div, replace the emoji with:
+        <img src="screenshots/welcome.png" alt="Welcome Screen">
+     The img tag is already styled to fill the preview area.
+     ============================================================ -->
 <section id="screens">
   <div class="reveal">
     <div class="section-label">// app screenshots</div>
@@ -319,6 +387,18 @@
   <p style="text-align:center;margin-top:2rem;font-size:.8rem;color:var(--text-muted);font-style:italic">Replace emoji placeholders with actual app screenshots.</p>
 </section>
 
+<!-- ============================================================
+     DEMO VIDEO (REQUIREMENT #7)
+     16:9 responsive container for a YouTube embed.
+     Currently shows a placeholder with instructions.
+
+     TO EMBED YOUR VIDEO:
+     1. Upload your 3-5 minute demo to YouTube
+     2. Delete the <div class="video-placeholder">...</div> block
+     3. Uncomment / add:
+        <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+                title="trAIn Demo" allowfullscreen></iframe>
+     ============================================================ -->
 <div class="video-section" id="demo">
   <div class="video-inner">
     <div class="reveal">
@@ -337,6 +417,13 @@
   </div>
 </div>
 
+<!-- ============================================================
+     TECHNOLOGIES USED (REQUIREMENT #4)
+     Eight tech cards, each linking to the technology's website.
+     Kotlin, Jetpack Compose, CameraX, MediaPipe/MoveNet,
+     Firebase, Android Studio, Figma, GitHub.
+     Each card has a name, description, and outbound link.
+     ============================================================ -->
 <section id="tech">
   <div class="reveal">
     <div class="section-label">// technologies used</div>
@@ -355,6 +442,13 @@
   </div>
 </section>
 
+<!-- ============================================================
+     SKILLS USED (REQUIREMENT #5)
+     18 skill pills displayed as a wrapped flex row.
+     Covers: Kotlin, Android, Compose, UI/UX, CV, Pose Estimation,
+     ML, Firebase, Auth, REST APIs, MVVM, Real-Time Processing,
+     Git, Agile, Figma, Prompt Engineering, Camera APIs, DB Design.
+     ============================================================ -->
 <section id="skills">
   <div class="reveal">
     <div class="section-label">// skills applied</div>
@@ -371,6 +465,13 @@
   </div>
 </section>
 
+<!-- ============================================================
+     DOCTOR DOPAMINE — AI COACH SPOTLIGHT
+     Highlights the AI persona behind the coaching feature.
+     Layout: circular avatar (with rotating ring animation) + text.
+     Contains a sample motivational quote in a styled blockquote.
+     On mobile, stacks vertically with centered avatar.
+     ============================================================ -->
 <div class="coach-section" id="coach">
   <div class="coach-inner">
     <div class="reveal">
@@ -389,6 +490,21 @@
   </div>
 </div>
 
+<!-- ============================================================
+     TEAM SECTION (REQUIREMENT #2)
+     Six team member cards in a responsive grid.
+     Each card has: photo placeholder, name, role, GitHub + LinkedIn links.
+
+     TO ADD MEMBER PHOTOS:
+     1. Place headshot images in a "photos/" folder
+     2. Inside each .team-photo div, uncomment the <img> tag
+        and update the src path, e.g.:
+        <img src="photos/christian.jpg" alt="Christian Estrada">
+     3. Remove the two-letter initials text (CE, JR, etc.)
+
+     NOTE: Jesus Ramirez's GitHub and LinkedIn are set to "#"
+           — update these with the correct URLs.
+     ============================================================ -->
 <section id="team">
   <div class="reveal">
     <div class="section-label">// the team</div>
@@ -397,7 +513,7 @@
   </div>
   <div class="team-grid">
     <div class="team-card reveal">
-      <div class="team-photo"><!-- <img src="photos/christian.jpg" alt="Christian Estrada"> -->CE</div>
+      <div class="team-photo"><img src="chris_pic.png" alt="Christian Estrada"></div>
       <h4>Christian Estrada</h4>
       <div class="role">Team Lead · Implementation Support</div>
       <div class="team-links">
@@ -406,7 +522,7 @@
       </div>
     </div>
     <div class="team-card reveal">
-      <div class="team-photo"><!-- <img src="photos/jesus.jpg" alt="Jesus Ramirez"> -->JR</div>
+      <div class="team-photo"><img src="profilePhoto.jpg" alt="Jesus Ramirez"></div>
       <h4>Jesus Ramirez</h4>
       <div class="role">Backend · AI Coach · Pose Logic</div>
       <div class="team-links">
@@ -416,7 +532,7 @@
       </div>
     </div>
     <div class="team-card reveal">
-      <div class="team-photo"><!-- <img src="photos/tabitha.jpg" alt="Tabitha Sulaiman"> -->TS</div>
+      <div class="team-photo"><img src="tabitha_pic.png" alt="Tabitha Sulaiman"></div>
       <h4>Tabitha Sulaiman</h4>
       <div class="role">Front-End Development</div>
       <div class="team-links">
@@ -425,7 +541,7 @@
       </div>
     </div>
     <div class="team-card reveal">
-      <div class="team-photo"><!-- <img src="photos/vishal.jpg" alt="Vishal Chaudhari"> -->VC</div>
+      <div class="team-photo"><img src="vishal_pic.jpg" alt="Vishal Chaudhari"></div>
       <h4>Vishal Chaudhari</h4>
       <div class="role">Front-End · Back-End</div>
       <div class="team-links">
@@ -434,7 +550,7 @@
       </div>
     </div>
     <div class="team-card reveal">
-      <div class="team-photo"><!-- <img src="photos/brian.jpg" alt="Brian Bonilla"> -->BB</div>
+      <div class="team-photo"><img src="brian_pic.jpg" alt="Brian Bonilla"></div>
       <h4>Brian Bonilla</h4>
       <div class="role">Back-End · Live Feed Camera</div>
       <div class="team-links">
@@ -442,7 +558,7 @@
       </div>
     </div>
     <div class="team-card reveal">
-      <div class="team-photo"><!-- <img src="photos/reenu.jpg" alt="Reenu Mohan"> -->RM</div>
+      <div class="team-photo"><img src="reemu_pic.jpg" alt="Reenu Mohan"></div>
       <h4>Reenu Mohan</h4>
       <div class="role">Front-End Development · UI/UX</div>
       <div class="team-links">
@@ -453,16 +569,39 @@
   </div>
 </section>
 
+<!-- ============================================================
+     SOURCE CODE LINK
+     Centered button linking to the GitHub repository.
+     ============================================================ -->
 <div class="csun-bar" style="border-bottom:1px solid var(--border)">
   <div class="section-label" style="margin-bottom:.75rem">// source code</div>
   <a href="https://github.com/tabee1024/trAIn" target="_blank" class="btn btn-outline" style="font-family:'JetBrains Mono',monospace;font-size:.8rem;letter-spacing:1px">github.com/tabee1024/trAIn →</a>
 </div>
+
+<!-- ============================================================
+     CSUN INSTITUTIONAL BAR
+     Course name, university name, and department.
+     ============================================================ -->
 <div class="csun-bar">
   <p>COMP 491 · Senior Design Project II — Spring 2026</p>
   <div class="school">California State University, Northridge</div>
   <p style="margin-top:.4rem">Department of Computer Science</p>
 </div>
 
+<!-- ============================================================
+     FOOTER (REQUIREMENTS #9 + #10)
+     Left side:  trAIn branding + tagline
+     Right side: CSUN logo + social media links + utility links
+
+     REQUIREMENT #9 items present:
+       ✓ CSUN logo (red mark)
+       ✓ Link to csun.edu
+       ✓ Facebook, Twitter/X, LinkedIn, Instagram links for CSUN
+       ✓ Copyright © California State University, Northridge
+
+     REQUIREMENT #10:
+       ✓ Link to course page (csun.edu/~xjiang/SeniorDesign/)
+     ============================================================ -->
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
@@ -470,7 +609,7 @@
       <p>Built with purpose. Designed for beginners. Powered by AI.</p>
     </div>
     <div class="footer-csun">
-      <a href="https://www.csun.edu" target="_blank" class="footer-csun-mark"><div class="csun-mark">CSUN</div><span class="csun-name">Cal State Northridge</span></a>
+      <a href="https://www.csun.edu" target="_blank" class="footer-csun-mark"><img src="CSUNS.png" alt="CSUN" style="width:28px;height:28px;border-radius:4px"><span class="csun-name">Cal State Northridge</span></a>
       <div class="footer-social">
         <a href="https://www.facebook.com/calstatenorthridge" target="_blank" title="CSUN Facebook">FB</a>
         <a href="https://twitter.com/csaborrar" target="_blank" title="CSUN X / Twitter">X</a>
@@ -490,6 +629,12 @@
   </div>
 </footer>
 
+<!-- ============================================================
+     SCROLL ANIMATIONS
+     IntersectionObserver watches all elements with class="reveal".
+     When an element scrolls into view (10% visible), it gets the
+     "visible" class added, triggering a CSS fadeUp transition.
+     ============================================================ -->
 <script>
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
